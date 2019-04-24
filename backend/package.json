@@ -1,0 +1,12 @@
+{
+  "name": "api-toucan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@gitlab.viarezo.fr:2018armillond/api-toucan.git",
+  "author": "Damien <damien.armillon@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.5.3"
+  }
+}
