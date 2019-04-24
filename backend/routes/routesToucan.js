@@ -10,8 +10,9 @@ router.route("/toucans")
             .exec(function (err, toucans) {
                 if (err) {
                     res.send(err);
+                } else {
+                    res.json(toucans);
                 }
-                res.json(toucans);
             });
     })
     // Une route pour créer un toucan
@@ -20,8 +21,9 @@ router.route("/toucans")
         toucan.save(function(err) {
             if (err) {
                 res.send(err);
+            } else {
+                res.send({message: "Toucan ajouté !"});
             }
-            res.send({message: "Toucan ajouté !"});
         });
     });
 
