@@ -1,6 +1,7 @@
 var express = require("express");
 var fs = require("fs");
 var path = require("path");
+var env = require("../.env");
 var upload = require("../utils/fileSaver");
 var Toucan = require("../models/modelToucan");
 var router = express.Router();
@@ -41,6 +42,35 @@ router.route("/toucans")
                 res.send({message: "Toucan ajouté !", id: id});
             }
         });
+    });
+
+router.route("/pdf/:id")
+    .get(function (req,res) {
+        //var pdfPath= path.join(env.savedExtensions[1].path,"/",req.params.id,".pdf");
+        var pdfPath = path.format({
+            dir: env.savedExtensions[1].path,
+            name: req.params.id,
+            ext: ".pdf"
+        });
+        console.log(pdfPath);
+        res.sendFile(pdfPath);
+    });
+
+router.route("/img/:id")
+    .get(function(req,res) {
+        var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
+        var fileKnown = false;
+        env.savedExtensions[0].extensions.forEach(ext => {
+            if (fs.existsSync(imgPath+ext)){
+                imgPath = imgPath+ext;
+                fileKnown = true;
+            }
+        });
+        if (fileKnown) {
+            res.sendfile(imgPath);
+        } else {
+            res.send(404,"Image non trouvée");
+        }
     });
 
 module.exports = router;
