@@ -2,6 +2,7 @@ var express = require("express");
 var fs = require("fs");
 var path = require("path");
 var { celebrate } = require("celebrate");
+
 var { newToucan, validId } = require("../utils/schema");
 var env = require("../.env");
 var upload = require("../utils/fileSaver");
@@ -49,7 +50,7 @@ router.route("/toucans")
                 }
             });
         });
-
+// Renvoie le pdf du toucan avec l'id donné
 router.route("/pdf/:id")
     .get(celebrate({params: validId}), function (req,res) {
         var pdfPath = path.format({
@@ -59,7 +60,7 @@ router.route("/pdf/:id")
         });
         res.sendFile(pdfPath);
     });
-
+// Renvoie la cover du toucan avec l'id donné
 router.route("/img/:id")
     .get(celebrate({params: validId}),function(req,res) {
         var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
@@ -75,6 +76,41 @@ router.route("/img/:id")
         } else {
             res.send(404,"Image non trouvée");
         }
+    });
+// Supprime le toucan avec l'id donné
+router.route("/delete/:id")
+    .post(celebrate({params: validId}), function(req,res) {
+        Toucan.deleteOne({_id:req.params.id},
+            function(err) {
+                if (err) {
+                    res.send(err);
+                } else {    // Si on a supprimée l'entrée, on supprime le pdf
+                    var pdfPath = path.format({
+                        dir: env.savedExtensions[1].path,
+                        name: req.params.id,
+                        ext: ".pdf"
+                    });
+                    fs.unlink(pdfPath, (err) => {
+                        if (err) {
+                            res.send(err);
+                        } else {    // Si on a supprimé le pdf on supprime l'image
+                            var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
+                            env.savedExtensions[0].extensions.forEach(ext => {
+                                if (fs.existsSync(imgPath+ext)){
+                                    imgPath = imgPath+ext;
+                                    fs.unlink(imgPath, (err) => {
+                                        if (err) {
+                                            res.send(err);
+                                        } else {
+                                            res.send("Toucan supprimé");
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
     });
 
 module.exports = router;
