@@ -38,7 +38,7 @@ router.route("/toucans")
             if (err) {
                 res.send(err);
             } else {
-                res.send({message: "Toucan ajouté !"});
+                res.send({message: "Toucan ajouté !", id: id});
             }
         });
     });
