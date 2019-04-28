@@ -1,4 +1,7 @@
 var express = require("express");
+var fs = require("fs");
+var path = require("path");
+var upload = require("../utils/fileSaver");
 var Toucan = require("../models/modelToucan");
 var router = express.Router();
 
@@ -16,8 +19,21 @@ router.route("/toucans")
             });
     })
     // Une route pour créer un toucan
-    .post(function(req,res) {
+    .post(upload.fields([{name:"toucan", maxCount:1 }, {name:"cover", maxCount:1 }]),function(req,res) {
         var toucan = new Toucan(req.body);
+        var id = (toucan._id).toString();
+        var index;
+        // On renome les fichier avec la clé de l'entrée dans la database
+        for (index in req.files) {
+            var file = req.files[index][0];
+            var extension = path.extname(file.path);
+            var newPath = file.destination+"/"+id+extension;
+            fs.rename(file.path,newPath, err => {
+                if (err) {
+                    res.err(err);
+                }
+            });
+        }
         toucan.save(function(err) {
             if (err) {
                 res.send(err);
