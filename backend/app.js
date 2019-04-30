@@ -16,7 +16,7 @@ db.once("open", function() {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use("/api",routesToucan);
+app.use("/toucan",routesToucan);
 
 
 app.set("port", process.env.PORT || 8000);
