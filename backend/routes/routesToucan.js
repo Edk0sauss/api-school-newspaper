@@ -3,17 +3,18 @@ var fs = require("fs");
 var path = require("path");
 var { celebrate } = require("celebrate");
 
-var { newToucan, validId } = require("../utils/schema");
+var { newToucan, validId, validLimit } = require("../utils/schema");
 var env = require("../.env");
 var upload = require("../utils/fileSaver");
 var Toucan = require("../models/modelToucan");
 var router = express.Router();
 
 router.route("/toucans")
-    // Une route qui  renvoie un json avec tous les toucans
-    .get(function(req,res) {
+    // Une route qui renvoie un json avec tous les toucans, si limit est défini et vaut n, on renvoie les n derniers toucans
+    .get(celebrate({query: validLimit}),function(req,res) {
         Toucan.find()
             .sort({date:-1})
+            .limit(req.query.limit)
             .exec(function (err, toucans) {
                 if (err) {
                     res.send(err);
