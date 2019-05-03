@@ -2,7 +2,7 @@ var { Joi } = require("celebrate");
 
 var newToucan = Joi.object({
     title: Joi.string()
-        .regex(/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s-]{1,60}$/) //Autorise la plupart des acents
+        .regex(/^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s'-]{1,60}$/) //Autorise la plupart des acents
         .required(),
     date: Joi.date().required()
 });
