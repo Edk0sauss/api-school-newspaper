@@ -7,7 +7,7 @@ var app = express();
 var dbName = "toucanDB";
 var connectionString = "mongodb://localhost:27017/" + dbName;
 
-mongoose.connect(connectionString, {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true,  useCreateIndex: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {
