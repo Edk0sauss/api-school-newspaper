@@ -29,28 +29,31 @@ router.route("/toucans")
         upload.fields([{name:"toucan", maxCount:1 }, {name:"cover", maxCount:1 }]),
         celebrate({body:newToucan}),
         function(req,res) {
-            var toucan = new Toucan(req.body);
-            var id = (toucan._id).toString();
-            var index;
-            // On renome les fichier avec la clé de l'entrée dans la database
-            for (index in req.files) {
-                var file = req.files[index][0];
-                var extension = path.extname(file.path);
-                var newPath = file.destination+"/"+id+extension;
-                fs.rename(file.path,newPath, err => {
+            if(req.files.length!=2){
+                res.status(400).send("Il manque un fichier");
+            } else {
+                var toucan = new Toucan(req.body);
+                var id = (toucan._id).toString();
+                var index;
+                // On renome les fichier avec la clé de l'entrée dans la database
+                for (index in req.files) {
+                    var file = req.files[index][0];
+                    var extension = path.extname(file.path);
+                    var newPath = file.destination+"/"+id+extension;
+                    fs.rename(file.path,newPath, err => {
+                        if (err) {
+                            res.err(err);
+                        }
+                    });
+                }
+                toucan.save(function(err) {
                     if (err) {
-                        res.err(err);
+                        res.status(400).send(err);
+                    } else {
+                        res.send({message: "Toucan ajouté !", id: id});
                     }
                 });
-            }
-            toucan.save(function(err) {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.send({message: "Toucan ajouté !", id: id});
-                }
-            });
-        });
+            }});
 // Renvoie le pdf du toucan avec l'id donné
 router.route("/pdf/:id")
     .get(celebrate({params: validId}), function (req,res) {
@@ -84,7 +87,7 @@ router.route("/delete/:id")
         Toucan.deleteOne({_id:req.params.id},
             function(err) {
                 if (err) {
-                    res.send(err);
+                    res.send(500).send(err);
                 } else {    // Si on a supprimée l'entrée, on supprime le pdf
                     var pdfPath = path.format({
                         dir: env.savedExtensions[1].path,
@@ -93,7 +96,7 @@ router.route("/delete/:id")
                     });
                     fs.unlink(pdfPath, (err) => {
                         if (err) {
-                            res.send(err);
+                            res.status(500).send(err);
                         } else {    // Si on a supprimé le pdf on supprime l'image
                             var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
                             env.savedExtensions[0].extensions.forEach(ext => {
@@ -101,7 +104,7 @@ router.route("/delete/:id")
                                     imgPath = imgPath+ext;
                                     fs.unlink(imgPath, (err) => {
                                         if (err) {
-                                            res.send(err);
+                                            res.status(500).send(err);
                                         } else {
                                             res.send("Toucan supprimé");
                                         }
