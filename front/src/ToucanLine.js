@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table, Image, Button, Modal} from 'semantic-ui-react'
+import {Table, Image, Button} from 'semantic-ui-react'
 import ModalSuppression from './ModalSuppression'
 
 class ToucanLine extends Component {
@@ -43,7 +43,7 @@ class ToucanLine extends Component {
                     <Button negative icon="cancel" onClick={() => this.setState({isModalOpen: true})}/>
                     <ModalSuppression
                     open={this.state.isModalOpen}
-                    imageId={this.props.toucan["_id"]}
+                    toucanId={this.props.toucan["_id"]}
                     closeModal={this.closeModal}
                     />
                 </Table.Cell>

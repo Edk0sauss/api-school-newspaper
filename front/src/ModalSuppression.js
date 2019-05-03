@@ -1,8 +1,14 @@
 import React, {Component} from 'react'
-import {Modal, Button, Image, Grid} from 'semantic-ui-react'
+import {Modal, Button, Image} from 'semantic-ui-react'
 
 class ModalSupression extends Component {
-    state={hihi:true};
+    deleteToucan(id) {
+        fetch(`/toucan/delete/${id}`,{
+            method: "Post"
+        })
+        .then(this.props.closeModal())
+    }
+
     render() {
         return (
             <Modal open={this.props.open} size="tiny"
@@ -10,11 +16,11 @@ class ModalSupression extends Component {
             >
             <Modal.Header style ={{textAlign:"center"}}>Veux tu vraiment supprimer ce Toucan ?</Modal.Header>
             <Modal.Content>
-                <Image centered src={`/toucan/img/${this.props.imageId}`} size="medium"/>
+                <Image centered src={`/toucan/img/${this.props.toucanId}`} size="medium"/>
             </Modal.Content>
             <Modal.Actions style ={{textAlign:"center"}} >
-                <Button negative>Supprimer le Toucan</Button>
-                <Button positive> Laisser le Toucan là où il est</Button>
+                <Button negative onClick={()=>this.deleteToucan(this.props.toucanId)}>Supprimer le Toucan</Button>
+                <Button positive onClick={()=>this.props.closeModal()}> Laisser le Toucan là où il est</Button>
             </Modal.Actions>
         </Modal>
         )
