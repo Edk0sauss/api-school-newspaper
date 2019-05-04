@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Form, Message} from 'semantic-ui-react'
 import {DateInput} from 'semantic-ui-calendar-react'
 import 'moment/locale/fr'
+import env from './.env'
 
 
 class FormToucan extends Component {
@@ -47,12 +48,26 @@ class FormToucan extends Component {
         this.setState({[name]: file})
     }
 
-    onDateChange = (event,{name,value}) =>{ 
-        
+    onDateChange = (event,{value}) =>{ 
+        let [day,month,year] = value.split("-")
+        this.setState({date: new Date(year,month,day)});
     }
 
     onSubmit = () => {
-        console.log(this.state)
+       const {date, title, toucan, cover} = this.state;
+       
+       const form = new FormData()
+       form.append("date",date)
+       form.append("title",title)
+       form.append("toucan",toucan)
+       form.append("cover",cover)
+       
+       fetch(`${env.backURL}/toucan/toucans`,{
+         method: 'POST',
+         body: form
+       })
+       .then((msg)=>console.log(msg))
+       .catch((err)=>console.log(err))
     }
 
     render() {
@@ -97,6 +112,7 @@ class FormToucan extends Component {
                     label="Date"
                     localization="fr"
                     name="date"
+                    onChange={this.onDateChange}
                     value={this.state.date}
                     //required
                 />
