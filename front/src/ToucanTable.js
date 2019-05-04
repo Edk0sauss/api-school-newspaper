@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Table} from 'semantic-ui-react'
 import ToucanLine from './ToucanLine'
+import env from './.env'
 
 class ToucanTable extends Component{
     constructor(){
@@ -11,13 +12,16 @@ class ToucanTable extends Component{
     }
 
     componentDidMount(){
-        fetch('/toucan/toucans')
+        fetch(`${env.backURL}/toucan/toucans`)
         .then(result => {
-            result.json()
-            .then(toucans => {
+            console.log(result)
+            return result.json()
+        })
+        .then(toucans => {
+                console.log(toucans)
                 this.setState({toucans})
             })
-        })
+        .catch(err => console.log(err))
     }
 
     render() {

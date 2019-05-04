@@ -8,7 +8,7 @@ function App() {
   return (
     <div>
     <Segment padded style={{margin:"3%"}}>
-      <FormToucan />
+  {/*<FormToucan /> */}
     </Segment>
     <Segment textAlign="center" padded style={{margin:"3%"}}>
       <ToucanTable/>

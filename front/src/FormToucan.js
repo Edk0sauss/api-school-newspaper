@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Form, Message} from 'semantic-ui-react'
 import {DateInput} from 'semantic-ui-calendar-react'
+import 'moment/locale/fr'
 
 
 class FormToucan extends Component {
@@ -40,10 +41,14 @@ class FormToucan extends Component {
 
     }
 
-    onFileChange = (e) =>{
-        const file = e.target.files[0]
-        const name = e.target.name
+    onFileChange = (event) => {
+        const file = event.target.files[0]
+        const name = event.target.name
         this.setState({[name]: file})
+    }
+
+    onDateChange = (event,{name,value}) =>{ 
+        
     }
 
     onSubmit = () => {
@@ -90,6 +95,9 @@ class FormToucan extends Component {
                 />
                 <DateInput
                     label="Date"
+                    localization="fr"
+                    name="date"
+                    value={this.state.date}
                     //required
                 />
 

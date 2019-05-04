@@ -19,7 +19,7 @@ router.route("/toucans")
                 if (err) {
                     res.send(err);
                 } else {
-                    res.json(toucans);
+                    res/*.header("Access-Control-Allow-Origin","*")*/.json(toucans);
                 }
             });
     })

@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var cors = require("cors");
 var routesToucan = require("./routes/routesToucan");
 
 var app = express();
@@ -13,7 +14,7 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {
     console.log("on est connecté!");
 });
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/toucan",routesToucan);

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Table, Image, Button} from 'semantic-ui-react'
 import ModalSuppression from './ModalSuppression'
+import env from './.env'
 
 class ToucanLine extends Component {
     constructor(props) {
@@ -26,9 +27,9 @@ class ToucanLine extends Component {
         return (
             <Table.Row>
                 <Table.Cell >
-                    <a href={`http://localhost:8000/toucan/pdf/${this.props.toucan["_id"]}`}>
+                    <a href={`${env.backURL}/toucan/pdf/${this.props.toucan["_id"]}`}>
                     <Image
-                    src={`/toucan/img/${this.props.toucan["_id"]}`}
+                    src={`${env.backURL}/toucan/img/${this.props.toucan["_id"]}`}
                     size="small"
                     />
                     </a>
