@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {Modal, Button, Image} from 'semantic-ui-react'
+import env from '.env'
 
 class ModalSupression extends Component {
     deleteToucan(id) {
-        fetch(`/toucan/delete/${id}`,{
+        fetch(`${env.backURL}/toucan/delete/${id}`,{
             method: "Post"
         })
         .then(this.props.closeModal())
@@ -16,7 +17,7 @@ class ModalSupression extends Component {
             >
             <Modal.Header style ={{textAlign:"center"}}>Veux tu vraiment supprimer ce Toucan ?</Modal.Header>
             <Modal.Content>
-                <Image centered src={`/toucan/img/${this.props.toucanId}`} size="medium"/>
+                <Image centered src={`${env.backURL}/toucan/img/${this.props.toucanId}`} size="medium"/>
             </Modal.Content>
             <Modal.Actions style ={{textAlign:"center"}} >
                 <Button negative onClick={()=>this.deleteToucan(this.props.toucanId)}>Supprimer le Toucan</Button>
