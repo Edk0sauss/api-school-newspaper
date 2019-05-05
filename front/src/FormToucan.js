@@ -87,7 +87,7 @@ class FormToucan extends Component {
                     onChange={this.onTitleChange}
                     value={this.state.title}
                     error={this.state.titleError}
-                    //required
+                    required
                 />
 
                 <Form.Input
@@ -96,7 +96,7 @@ class FormToucan extends Component {
                     name="toucan"
                     accept="application/pdf"
                     type="file"
-                    //required
+                    required
                 />
 
                 <Form.Input
@@ -105,7 +105,7 @@ class FormToucan extends Component {
                     name="cover"
                     type="file"
                     accept="image/png, image/jpeg"
-                    //required
+                    required
                 />
                 <DateInput
                     label="Date"
@@ -113,7 +113,7 @@ class FormToucan extends Component {
                     name="date"
                     onChange={this.onDateChange}
                     value={this.state.dateShown}
-                    //required
+                    required
                 />
 
                 <Message error header="Formulaire incomplet" content={
