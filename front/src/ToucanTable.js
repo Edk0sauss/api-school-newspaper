@@ -24,7 +24,7 @@ class ToucanTable extends Component{
 
     render() {
         return(
-            <Table celled padded collapsing size="small" textAlign="center">
+            <Table style={{margin:"auto"}} celled padded collapsing size="small" textAlign="center">
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Cover</Table.HeaderCell>

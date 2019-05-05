@@ -50,8 +50,8 @@ class FormToucan extends Component {
         this.setState({[name]: file})
     }
 
-    onDateChange = (event,{value}) =>{ 
-        let [day,month,year] = value.split("-")
+    onDateChange = (event,{value}) =>{
+        let [year,month,day] = value.split("-")
         this.setState({dateShown: value, date: new Date(Date.UTC(year,month-1,day,0,0,0))});
     }
 
@@ -70,7 +70,7 @@ class FormToucan extends Component {
          body: form
        })
        .then((response) => {
-            if (response.ok) {
+            if (response.ok) { // Si la réponse est bonne on reload tout simplement
                 window.location.reload()
             } else {
                 try {
@@ -98,10 +98,9 @@ class FormToucan extends Component {
 
         return (
             <div>
-            <Form error={formError}  onSubmit={this.onSubmit}>
+            <Form error={formError}  onSubmit={this.onSubmit} >
                 <Form.Group style={{margin:"auto"}}>
                 <Form.Input
-                    style={{height:"inherit"}}
                     type="text"
                     label="Thème Toucan"
                     placeholder="Thème"
@@ -112,28 +111,36 @@ class FormToucan extends Component {
                     required
                 />
 
-                <DateInput
+                {/*<DateInput
                     style={{width:"10em",}}
                     pickerStyle={{active:{backgroundColor:"red"}}}
                     hideMobileKeyboard
                     label="Date"
                     localization="fr"
-                    name="date"
+                    name="datheu"
                     onChange={this.onDateChange}
                     value={this.state.dateShown}
                     required
+                />*/}
+                <Form.Input
+                type="date"
+                label="Date"
+                name="date"
+                onChange={this.onDateChange}
+                value={this.state.dateShown}
+                required
                 />
                 </Form.Group>
                 <Form.Group>
                 <Form.Input
                     label="PDF du Toucan"
                     onChange={this.onFileChange}
+                    style={{width:"20em"}}
                     name="toucan"
                     accept="application/pdf"
                     type="file"
                     required
                 />
-
                 <Form.Input
                     label="Cover du Toucan"
                     onChange={this.onFileChange}
@@ -151,7 +158,6 @@ class FormToucan extends Component {
                     </ul>
                 } />
             </Form>
-            {console.log(this.state.responseMessage)}
             {this.state.responseMessage ?
             <Message negative header="Erreur Serveur" content={this.state.responseMessage}></Message>: null}
             </div>
