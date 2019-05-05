@@ -20,8 +20,8 @@ class ModalSupression extends Component {
                 <Image centered src={`${env.backURL}/toucan/img/${this.props.toucanId}`} size="medium"/>
             </Modal.Content>
             <Modal.Actions style ={{textAlign:"center"}} >
-                <Button negative onClick={()=>this.deleteToucan(this.props.toucanId)}>Supprimer le Toucan</Button>
                 <Button positive onClick={()=>this.props.closeModal()}> Laisser le Toucan là où il est</Button>
+                <Button negative onClick={()=>this.deleteToucan(this.props.toucanId)}>Supprimer le Toucan</Button>
             </Modal.Actions>
         </Modal>
         )
