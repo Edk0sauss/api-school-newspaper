@@ -14,14 +14,12 @@ class ToucanTable extends Component{
     componentDidMount(){
         fetch(`${env.backURL}/toucan/toucans`)
         .then(result => {
-            console.log(result)
             return result.json()
         })
         .then(toucans => {
-                console.log(toucans)
-                this.setState({toucans})
+            this.setState({toucans})
             })
-        .catch(err => console.log(err))
+       .catch(err => console.log(err))
     }
 
     render() {

@@ -31,7 +31,6 @@ class FormToucan extends Component {
     }
 
     onToucanChange = (e) => {
-        console.log(e.target);
         const file = e.target.files[0];
 
         if (file.type === 'application/pdf') {  // Si on a bien un pdf
@@ -50,7 +49,7 @@ class FormToucan extends Component {
 
     onDateChange = (event,{value}) =>{ 
         let [day,month,year] = value.split("-")
-        this.setState({date: new Date(Date.UTC(year,month-1,day,0,0,0))},()=> console.log(this.state.date.toLocaleDateString()));
+        this.setState({date: new Date(Date.UTC(year,month-1,day,0,0,0))});
     }
 
     onSubmit = () => {
@@ -66,12 +65,11 @@ class FormToucan extends Component {
          method: 'POST',
          body: form
        })
-       .then((msg)=>console.log(msg))
+       .then(() => window.location.reload())
        .catch((err)=>console.log(err))
     }
 
     render() {
-
         const errorMessage = [];
         if (this.state.titleError) {
             errorMessage.push("Le thème doit faire entre 1 et 60 caractères, les caractères spéciaux ($ € { } [ ] ... ) ne sont pas autorisés")
@@ -122,7 +120,6 @@ class FormToucan extends Component {
                         {errorMessage.map((err) => {return <li>{err}</li>})}
                     </ul>
                 } />
-
                 <Form.Button disabled={formError} content="C'est parti !" />
             </Form>
         )

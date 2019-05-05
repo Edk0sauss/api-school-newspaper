@@ -7,7 +7,8 @@ class ModalSupression extends Component {
         fetch(`${env.backURL}/toucan/delete/${id}`,{
             method: "Post"
         })
-        .then(this.props.closeModal())
+        .then(() => window.location.reload())
+        .catch(err => console.log(err))
     }
 
     render() {
