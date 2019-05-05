@@ -10,14 +10,15 @@ class FormToucan extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: null,
+            title: "",
             titleError: false,
 
-            toucan: null,
+            toucan: undefined,
 
-            cover: null,
+            cover: undefined,
 
-            date: null,
+            dateShown:"",
+            date: undefined,
         }
     }
 
@@ -49,7 +50,7 @@ class FormToucan extends Component {
 
     onDateChange = (event,{value}) =>{ 
         let [day,month,year] = value.split("-")
-        this.setState({date: new Date(Date.UTC(year,month-1,day,0,0,0))});
+        this.setState({dateShown: value, date: new Date(Date.UTC(year,month-1,day,0,0,0))});
     }
 
     onSubmit = () => {
@@ -111,7 +112,7 @@ class FormToucan extends Component {
                     localization="fr"
                     name="date"
                     onChange={this.onDateChange}
-                    value={this.state.date}
+                    value={this.state.dateShown}
                     //required
                 />
 
