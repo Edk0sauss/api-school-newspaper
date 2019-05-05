@@ -50,7 +50,7 @@ class FormToucan extends Component {
 
     onDateChange = (event,{value}) =>{ 
         let [day,month,year] = value.split("-")
-        this.setState({date: new Date(year,month,day)});
+        this.setState({date: new Date(Date.UTC(year,month-1,day,0,0,0))},()=> console.log(this.state.date.toLocaleDateString()));
     }
 
     onSubmit = () => {

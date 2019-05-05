@@ -10,15 +10,6 @@ class ToucanLine extends Component {
         this.closeModal = this.closeModal.bind(this)
     }
 
-
-    date(time){
-        const dateObject = new Date(time)
-        const year = dateObject.getFullYear();
-        const month = dateObject.getMonth();
-        const day = dateObject.getDay();
-        return (`${day+1}/${month+1}/${year}`)
-    }
-
     closeModal() {
         this.setState({ isModalOpen: false })
     }
@@ -38,7 +29,7 @@ class ToucanLine extends Component {
                     {this.props.toucan.title}
                 </Table.Cell>
                 <Table.Cell  >
-                    {this.date(this.props.toucan.date)}
+                    {(new Date(this.props.toucan.date).toLocaleDateString())}
                 </Table.Cell>
                 <Table.Cell style={{width:"fit-content"}}>
                     <Button negative icon="cancel" onClick={() => this.setState({isModalOpen: true})}/>
