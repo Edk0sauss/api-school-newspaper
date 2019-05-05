@@ -19,6 +19,8 @@ class FormToucan extends Component {
 
             dateShown:"",
             date: undefined,
+            
+            responseMessage:"",
         }
     }
 
@@ -54,6 +56,7 @@ class FormToucan extends Component {
     }
 
     onSubmit = () => {
+       this.setState({responseMessage:""});
        const {date, title, toucan, cover} = this.state;
        
        const form = new FormData()
@@ -66,8 +69,24 @@ class FormToucan extends Component {
          method: 'POST',
          body: form
        })
-       .then(() => window.location.reload())
-       .catch((err)=>console.log(err))
+       .then((response) => {
+            if (response.ok) {
+                window.location.reload()
+            } else {
+                try {
+                    response.json().then((json)=>{
+                        if(json.errmsg.split(" ")[0]==="E11000"){ // L'erreur la plus probable
+                            this.setState({responseMessage:"La date sélectionnée existe déjà"})
+                        } else {
+                            this.setState({responseMessage:json.errmsg})
+                        }
+                    });
+                } catch {
+                    response.text().then(text => this.setState({responseMessage:text}))
+
+            }};
+       } )
+       .catch((err)=> this.setState({responseMessage:err}))
     }
 
     render() {
@@ -78,8 +97,11 @@ class FormToucan extends Component {
         const formError= errorMessage.length !== 0; //Le formulaire a une erreur si errorMessage a au moins 1 erreure
 
         return (
+            <div>
             <Form error={formError}  onSubmit={this.onSubmit}>
+                <Form.Group style={{margin:"auto"}}>
                 <Form.Input
+                    style={{height:"inherit"}}
                     type="text"
                     label="Thème Toucan"
                     placeholder="Thème"
@@ -90,6 +112,19 @@ class FormToucan extends Component {
                     required
                 />
 
+                <DateInput
+                    style={{width:"10em",}}
+                    pickerStyle={{active:{backgroundColor:"red"}}}
+                    hideMobileKeyboard
+                    label="Date"
+                    localization="fr"
+                    name="date"
+                    onChange={this.onDateChange}
+                    value={this.state.dateShown}
+                    required
+                />
+                </Form.Group>
+                <Form.Group>
                 <Form.Input
                     label="PDF du Toucan"
                     onChange={this.onFileChange}
@@ -107,22 +142,19 @@ class FormToucan extends Component {
                     accept="image/png, image/jpeg"
                     required
                 />
-                <DateInput
-                    label="Date"
-                    localization="fr"
-                    name="date"
-                    onChange={this.onDateChange}
-                    value={this.state.dateShown}
-                    required
-                />
+                <Form.Button disabled={formError} content="C'est parti !" />
+                </Form.Group>
 
                 <Message error header="Formulaire incomplet" content={
                     <ul>
                         {errorMessage.map((err) => {return <li>{err}</li>})}
                     </ul>
                 } />
-                <Form.Button disabled={formError} content="C'est parti !" />
             </Form>
+            {console.log(this.state.responseMessage)}
+            {this.state.responseMessage ?
+            <Message negative header="Erreur Serveur" content={this.state.responseMessage}></Message>: null}
+            </div>
         )
     }
 

@@ -42,7 +42,7 @@ router.route("/toucans")
                     var newPath = file.destination+"/"+id+extension;
                     fs.rename(file.path,newPath, err => {
                         if (err) {
-                            res.err(err);
+                            res.status(400).send(err);
                         }
                     });
                 }
