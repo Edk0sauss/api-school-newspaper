@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
 import {Form, Message} from 'semantic-ui-react'
-import {DateInput} from 'semantic-ui-calendar-react'
-import 'moment/locale/fr'
 import env from './.env'
-
-
 class FormToucan extends Component {
     
     constructor(props) {
@@ -98,8 +94,8 @@ class FormToucan extends Component {
 
         return (
             <div>
-            <Form error={formError}  onSubmit={this.onSubmit} >
-                <Form.Group style={{margin:"auto"}}>
+            <Form error={formError} style={{margin:"auto"}} onSubmit={this.onSubmit} >
+                <Form.Group >
                 <Form.Input
                     type="text"
                     label="Thème Toucan"
@@ -108,50 +104,42 @@ class FormToucan extends Component {
                     onChange={this.onTitleChange}
                     value={this.state.title}
                     error={this.state.titleError}
+                    icon="paper plane"
+                    iconPosition="left"
                     required
                 />
-
-                {/*<DateInput
-                    style={{width:"10em",}}
-                    pickerStyle={{active:{backgroundColor:"red"}}}
-                    hideMobileKeyboard
+                <Form.Input
+                    type="date"
                     label="Date"
-                    localization="fr"
-                    name="datheu"
+                    name="date"
+                    icon="calendar"
+                    iconPosition="left"
                     onChange={this.onDateChange}
                     value={this.state.dateShown}
                     required
-                />*/}
-                <Form.Input
-                type="date"
-                label="Date"
-                name="date"
-                onChange={this.onDateChange}
-                value={this.state.dateShown}
-                required
                 />
                 </Form.Group>
                 <Form.Group>
                 <Form.Input
+                    type="file"
                     label="PDF du Toucan"
                     onChange={this.onFileChange}
-                    style={{width:"20em"}}
+                    style={{maxWidth:"25em"}}
                     name="toucan"
                     accept="application/pdf"
-                    type="file"
                     required
                 />
                 <Form.Input
+                    type="file"
                     label="Cover du Toucan"
                     onChange={this.onFileChange}
+                    style={{maxWidth:"25em"}}
                     name="cover"
-                    type="file"
                     accept="image/png, image/jpeg"
                     required
                 />
-                <Form.Button disabled={formError} content="C'est parti !" />
                 </Form.Group>
-
+                <Form.Button disabled={formError} content="C'est parti !" />
                 <Message error header="Formulaire incomplet" content={
                     <ul>
                         {errorMessage.map((err) => {return <li>{err}</li>})}

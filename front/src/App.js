@@ -1,5 +1,5 @@
 import React from 'react';
-import {Segment, SegmentGroup} from 'semantic-ui-react';
+import {Segment} from 'semantic-ui-react';
 import ToucanTable from './ToucanTable';
 import FormToucan from './FormToucan'
 import './App.css';
