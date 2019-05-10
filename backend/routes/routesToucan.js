@@ -29,7 +29,7 @@ router.route("/toucans")
         upload.fields([{name:"toucan", maxCount:1 }, {name:"cover", maxCount:1 }]),
         celebrate({body:newToucan}),
         function(req,res) {
-            if(Object.keys(req.files).length!=2){   // Vérifie qu'il y a 2 fichiers envoyés
+            if(Object.keys(req.files).length!==2){   // Vérifie qu'il y a 2 fichiers envoyés
                 res.status(400).send("Il manque un fichier");
             } else {
                 var toucan = new Toucan(req.body);
