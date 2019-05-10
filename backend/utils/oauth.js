@@ -11,7 +11,7 @@ const getURI = (redirectUri,state) => {
     return `${oauth.authorizationURI}/?redirect_uri=${redirectUri}&client_id=${oauth.clientId}&response_type=code&state=${state}&scope=default`;
 };
 
-const getToken = (redirectUri,code) => {
+const getToken = (redirectUri,code,state) => {
     return axios.post(
         oauth.accesTokenURI,
         querystring.stringify({
@@ -20,6 +20,7 @@ const getToken = (redirectUri,code) => {
             redirect_uri: redirectUri,
             client_id:oauth.clientId,
             client_secret: oauth.clientSecret,
+            state: state,
         })
     );
 };
@@ -35,12 +36,11 @@ const getUser = (token) =>{
 };
 
 const login = (req, res) => {
-    //req.session.state = Math.random().toString(36);
-    req.session.state ="je kiffe le caca";
+    req.session.state = Math.random().toString(36);
     res.redirect(getURI(redirectUri, req.session.state));
 };
 
-const oauthCallback = (req,res,next) => {
+const oauthCallback = (req,res) => {
     getToken(redirectUri,req.query.code, req.session.state)
         .then(response => {
             const accessToken = response.data.access_token;
@@ -58,9 +58,9 @@ const oauthCallback = (req,res,next) => {
                         res.status(400).end("Vous n'avez pas la permission");
                     }
                 })
-                .catch(err =>{console.log("Erreur1"); next(err);});
+                .catch(err => res.status(500).end("Impossible de récupérer les informations\n"+err));
         })
-        .catch(err => {console.log("Erreur2"); next(err);});
+        .catch(err => res.status(500).end("Impossible de récupérer les informations\n"+err));
 };
 
 module.exports = {login, oauthCallback};

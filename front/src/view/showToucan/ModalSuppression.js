@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Modal, Button, Image} from 'semantic-ui-react'
-import env from './.env'
+import env from '../../.env'
 
 class ModalSupression extends Component {
     deleteToucan(id) {

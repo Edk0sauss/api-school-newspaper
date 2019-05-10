@@ -1,21 +1,16 @@
 import React from 'react';
-import {Segment} from 'semantic-ui-react';
-import ToucanTable from './ToucanTable';
-import FormToucan from './FormToucan'
+import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import './App.css';
+import MainPage from './view/mainPage';
+import Login from './view/Login';
+import env from './.env'
 
 function App() {
   return (
-    <Segment.Group  >
-      <Segment padded style={{margin:"3%"}}>
-      <h2 style={{textAlign:"center"}}>Rajout de Toucan</h2>
-        <FormToucan />
-      </Segment>
-      <Segment textAlign="center" padded style={{margin:"3%"}} >
-      <h2>Les Toucans</h2>
-        <ToucanTable style={{margin:"50px"}}/>
-      </Segment>
-    </Segment.Group>
+    <Router >
+      <Route exact path='/' render={()=>false ? <MainPage/> : window.location=`${env.backURL}/oauth/login`}/>
+      <Route exact path='/login/:token' component={Login} />
+    </Router>
   );
 }
 
