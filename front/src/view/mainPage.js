@@ -11,9 +11,13 @@ class MainPage extends Component {
         return (
             <Segment.Group >
             <Segment padded style={{margin:"3%"}}>
-            <LogoutButton style={{float:"right"}}/>
-            <h2 style={{textAlign:"center"}}>Rajout de Toucan</h2>
+            <div style={{textAlign:"right"}}>
+                <LogoutButton />
+            </div>
+            <div>
+                <h2 style={{textAlign:"center"}}>Rajout de Toucan</h2>
                 <FormToucan />
+            </div>
             </Segment>
             <Segment textAlign="center" padded style={{margin:"3%"}} >
             <h2>Les Toucans</h2>
