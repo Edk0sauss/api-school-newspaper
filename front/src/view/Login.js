@@ -5,12 +5,13 @@ class Login extends Component {
     componentDidMount(){
         localStorage.setItem("token",this.props.match.params.token);
         console.log(localStorage.getItem("token"));
+        window.location = '/';
         
         
     }
     render(){
         return (
-            <div>tesst</div>
+            <div>Vous allez être redirigé</div>
         )
     }
 }
