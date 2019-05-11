@@ -8,10 +8,10 @@ import isLogged from './utils/Oauth';
 
 function App() {
   return (
-    <Router >
-      <Route exact path='/' render={()=>isLogged() ? <MainPage/> : window.location=`${env.backURL}/oauth/login`}/>
-      <Route exact path='/login/:token' component={Login} />
-    </Router>
+      <Router >
+        <Route exact path='/' render={()=>isLogged() ? <MainPage/> : window.location=`${env.backURL}/oauth/login`}/>
+        <Route exact path='/login/:token' component={Login} />
+      </Router>
   );
 }
 

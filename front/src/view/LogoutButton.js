@@ -16,7 +16,7 @@ class LogoutButton extends Component {
         color="violet"
         icon>
         <Icon name="power" style={{ paddingRight:"2em" }}/>
-        Déconexion
+        Déconnexion
         </Button>
     }    
 }
