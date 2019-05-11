@@ -5,6 +5,7 @@ var { celebrate } = require("celebrate");
 
 var { newToucan, validId, validLimit } = require("../utils/schema");
 var env = require("../.env");
+var isLogged = require("../utils/authentification");
 var upload = require("../utils/fileSaver");
 var Toucan = require("../models/modelToucan");
 var router = express.Router();
@@ -19,13 +20,14 @@ router.route("/toucans")
                 if (err) {
                     res.send(err);
                 } else {
-                    res/*.header("Access-Control-Allow-Origin","*")*/.json(toucans);
+                    res.json(toucans);
                 }
             });
     })
 
     // Une route pour créer un toucan
     .post(
+        isLogged,
         upload.fields([{name:"toucan", maxCount:1 }, {name:"cover", maxCount:1 }]),
         celebrate({body:newToucan}),
         function(req,res) {
@@ -83,38 +85,41 @@ router.route("/img/:id")
     });
 // Supprime le toucan avec l'id donné
 router.route("/delete/:id")
-    .post(celebrate({params: validId}), function(req,res) {
-        Toucan.deleteOne({_id:req.params.id},
-            function(err) {
-                if (err) {
-                    res.send(500).send(err);
-                } else {    // Si on a supprimée l'entrée, on supprime le pdf
-                    var pdfPath = path.format({
-                        dir: env.savedExtensions[1].path,
-                        name: req.params.id,
-                        ext: ".pdf"
-                    });
-                    fs.unlink(pdfPath, (err) => {
-                        if (err) {
-                            res.status(500).send(err);
-                        } else {    // Si on a supprimé le pdf on supprime l'image
-                            var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
-                            env.savedExtensions[0].extensions.forEach(ext => {
-                                if (fs.existsSync(imgPath+ext)){
-                                    imgPath = imgPath+ext;
-                                    fs.unlink(imgPath, (err) => {
-                                        if (err) {
-                                            res.status(500).send(err);
-                                        } else {
-                                            res.send("Toucan supprimé");
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-    });
+    .post(
+        isLogged,
+        celebrate({params: validId}),
+        function(req,res) {
+            Toucan.deleteOne({_id:req.params.id},
+                function(err) {
+                    if (err) {
+                        res.send(500).send(err);
+                    } else {    // Si on a supprimée l'entrée, on supprime le pdf
+                        var pdfPath = path.format({
+                            dir: env.savedExtensions[1].path,
+                            name: req.params.id,
+                            ext: ".pdf"
+                        });
+                        fs.unlink(pdfPath, (err) => {
+                            if (err) {
+                                res.status(500).send(err);
+                            } else {    // Si on a supprimé le pdf on supprime l'image
+                                var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
+                                env.savedExtensions[0].extensions.forEach(ext => {
+                                    if (fs.existsSync(imgPath+ext)){
+                                        imgPath = imgPath+ext;
+                                        fs.unlink(imgPath, (err) => {
+                                            if (err) {
+                                                res.status(500).send(err);
+                                            } else {
+                                                res.send("Toucan supprimé");
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+        });
 
 module.exports = router;

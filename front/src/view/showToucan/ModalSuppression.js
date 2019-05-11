@@ -1,13 +1,23 @@
 import React, {Component} from 'react'
-import {Modal, Button, Image} from 'semantic-ui-react'
+import {Modal, Button, Image,Message} from 'semantic-ui-react'
 import env from '../../.env'
 
 class ModalSupression extends Component {
+    state = {error:''};
+
     deleteToucan(id) {
         fetch(`${env.backURL}/toucan/delete/${id}`,{
-            method: "Post"
+            method: "Post",
+            headers:{token: localStorage.getItem("token")}
         })
-        .then(() => window.location.reload())
+        .then((response) => {
+            if (response.ok) {
+            window.location.reload()
+            } else {
+                response.text()
+                .then((error) => this.setState({error:error}))
+            }
+        })
         .catch(err => console.log(err))
     }
 
@@ -24,6 +34,7 @@ class ModalSupression extends Component {
                 <Button positive onClick={()=>this.props.closeModal()}> Laisser le Toucan là où il est</Button>
                 <Button negative onClick={()=>this.deleteToucan(this.props.toucanId)}>Supprimer le Toucan</Button>
             </Modal.Actions>
+            {this.state.error && <Message negative content={this.state.error}/>}
         </Modal>
         )
     }

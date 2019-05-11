@@ -60,27 +60,24 @@ class FormToucan extends Component {
        form.append("title",title)
        form.append("toucan",toucan)
        form.append("cover",cover)
-       
        fetch(`${env.backURL}/toucan/toucans`,{
-         method: 'POST',
-         body: form
+            method: 'POST',
+            headers:{token: localStorage.getItem("token")},
+            body: form
        })
        .then((response) => {
             if (response.ok) { // Si la réponse est bonne on reload tout simplement
                 window.location.reload()
             } else {
-                try {
-                    response.json().then((json)=>{
-                        if(json.errmsg.split(" ")[0]==="E11000"){ // L'erreur la plus probable
-                            this.setState({responseMessage:"La date sélectionnée existe déjà"})
-                        } else {
-                            this.setState({responseMessage:json.errmsg})
-                        }
-                    });
-                } catch {
-                    response.text().then(text => this.setState({responseMessage:text}))
-
-            }};
+                response.json()
+                .then((json)=>{
+                    if(json.errmsg.split(" ")[0]==="E11000"){ // L'erreur la plus probable
+                        this.setState({responseMessage:"La date sélectionnée existe déjà"})
+                    } else {
+                        this.setState({responseMessage:json.errmsg})
+                    }
+                })
+            };
        } )
        .catch((err)=> this.setState({responseMessage:err}))
     }
