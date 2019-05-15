@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Form, Message} from 'semantic-ui-react'
-import env from '../.env'
+import env from '../../.env'
 class FormToucan extends Component {
     
     constructor(props) {

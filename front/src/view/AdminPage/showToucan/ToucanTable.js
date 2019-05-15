@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Table} from 'semantic-ui-react'
 import ToucanLine from './ToucanLine'
-import env from '../../.env'
+import env from '../../../.env'
 
 class ToucanTable extends Component{
     constructor(){

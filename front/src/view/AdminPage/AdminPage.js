@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Segment} from 'semantic-ui-react';
 import ToucanTable from './showToucan/ToucanTable';
 import FormToucan from './FormToucan';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '../LogoutButton';
 
 
 class MainPage extends Component {

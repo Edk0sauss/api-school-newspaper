@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Table, Image, Button} from 'semantic-ui-react'
 import ModalSuppression from './ModalSuppression'
-import env from '../../.env'
+import env from '../../../.env'
 
 class ToucanLine extends Component {
     constructor(props) {
