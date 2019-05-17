@@ -20,7 +20,6 @@ class AllToucan extends Component {
         })
         .then(toucans => {
             this.setState({toucans})
-            console.log(toucans)
             })
        .catch(err => console.log(err))
     }
@@ -34,6 +33,7 @@ class AllToucan extends Component {
                     link={`${env.backURL}/toucan/pdf/${toucan["_id"]}`}
                     header={toucan.title}
                     date={(new Date(toucan.date).toLocaleDateString())}
+                    key={toucan._id}
                     />
              })}
             </Card.Group>

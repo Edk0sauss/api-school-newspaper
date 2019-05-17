@@ -7,7 +7,6 @@ const ToucanCard = ({...props}) => {
                 href={props.link}
                 link
                 style={{margin:"1em"}}
-                description="On test"
             >
                 <Card.Content>
                 <Card.Header content={props.header}/>
