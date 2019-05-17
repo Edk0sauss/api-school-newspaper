@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Card} from 'semantic-ui-react'
+import {Card, Segment} from 'semantic-ui-react'
 import ToucanCard from './ToucanCard'
 import env from '../../.env'
 
@@ -26,15 +26,18 @@ class AllToucan extends Component {
     }
     render(){
         return (
+            <Segment style={{margin:"3em",padding:"2em"}}>
             <Card.Group>
                 {this.state.toucans.map( toucan => {
                     return <ToucanCard
                     image={`${env.backURL}/toucan/img/${toucan["_id"]}`}
                     link={`${env.backURL}/toucan/pdf/${toucan["_id"]}`}
                     header={toucan.title}
+                    date={(new Date(toucan.date).toLocaleDateString())}
                     />
              })}
             </Card.Group>
+            </Segment>
         )}
 }
 
