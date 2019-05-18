@@ -18,7 +18,7 @@ class ToucanLine extends Component {
         return (
             <Table.Row>
                 <Table.Cell >
-                    <a href={`${env.backURL}/toucan/pdf/${this.props.toucan["_id"]}`}>
+                    <a href={`${env.backURL}/toucan/pdf/${this.props.toucan["_id"]}.pdf`}>
                     <Image
                     src={`${env.backURL}/toucan/img/${this.props.toucan["_id"]}`}
                     size="small"

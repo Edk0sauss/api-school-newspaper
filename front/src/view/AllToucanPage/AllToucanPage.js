@@ -30,7 +30,7 @@ class AllToucan extends Component {
                 {this.state.toucans.map( toucan => {
                     return <ToucanCard
                     image={`${env.backURL}/toucan/img/${toucan["_id"]}`}
-                    link={`${env.backURL}/toucan/pdf/${toucan["_id"]}`}
+                    link={`${env.backURL}/toucan/pdf/${toucan["_id"]}.pdf`}
                     header={toucan.title}
                     date={(new Date(toucan.date).toLocaleDateString())}
                     key={toucan._id}
