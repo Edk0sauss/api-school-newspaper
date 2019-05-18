@@ -56,33 +56,7 @@ router.route("/toucans")
                     }
                 });
             }});
-// Renvoie le pdf du toucan avec l'id donné
-router.route("/pdf/:id")
-    .get(celebrate({params: validId}), function (req,res) {
-        var pdfPath = path.format({
-            dir: env.savedExtensions[1].path,
-            name: req.params.id,
-            ext: ".pdf"
-        });
-        res.sendFile(pdfPath);
-    });
-// Renvoie la cover du toucan avec l'id donné
-router.route("/img/:id")
-    .get(celebrate({params: validId}),function(req,res) {
-        var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
-        var fileKnown = false;
-        env.savedExtensions[0].extensions.forEach(ext => {
-            if (fs.existsSync(imgPath+ext)){
-                imgPath = imgPath+ext;
-                fileKnown = true;
-            }
-        });
-        if (fileKnown) {
-            res.sendFile(imgPath);
-        } else {
-            res.send(404,"Image non trouvée");
-        }
-    });
+
 // Supprime le toucan avec l'id donné
 router.route("/delete/:id")
     .post(
@@ -121,5 +95,25 @@ router.route("/delete/:id")
                     }
                 });
         });
+
+// Renvoie la cover du toucan avec l'id donné
+router.route("/img/:id")
+    .get(celebrate({params: validId}),function(req,res) {
+        var imgPath = path.join(env.savedExtensions[0].path,"/",req.params.id);
+        var fileKnown = false;
+        env.savedExtensions[0].extensions.forEach(ext => {
+            if (fs.existsSync(imgPath+ext)){
+                imgPath = imgPath+ext;
+                fileKnown = true;
+            }
+        });
+        if (fileKnown) {
+            res.sendFile(imgPath);
+        } else {
+            res.send(404,"Image non trouvée");
+        }
+    });
+
+router.use("/pdf",express.static(env.savedExtensions[1].path));
 
 module.exports = router;
