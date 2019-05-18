@@ -11,12 +11,16 @@ import logo from './image/logo.png'
 
 function App() {
   return (
-      <div style={{verticalAlign:"center"}}>
-      <Image src={logo} alt="Logo" href="/" style={{marginLeft:'30%', width:'40%'}} />
+      <div >
+        <div style={{textAlign:"center"}}>
+      <Image src={logo} alt="Logo" href="/" style={{ width:'40%'}} />
+      </div>
       <Router >
-        <Link to="/admin" style={{float:"right", margin:"2em"}} >
+        <div style={{textAlign:"right"}}>
+        <Link to="/admin" style={{position:"absolute",top:'2em' ,right:"2em"}} >
           <Button icon="male" content="Espace admin"/>
         </Link>
+        </div>
         <Route exact path='/' component={AllToucanPage} />
         <Route exact path='/admin' render={()=>isLogged() ? <AdminPage/> : window.location=`${env.backURL}/oauth/login`}/>
         <Route exact path='/login/:token' component={Login} />
