@@ -25,7 +25,7 @@ class AllToucan extends Component {
     }
     render(){
         return (
-            <Segment style={{margin:"3em",padding:"2em"}}>
+            <Segment style={{margin:"3em",padding:"2em"}} textAlign="center">
             <Card.Group>
                 {this.state.toucans.map( toucan => {
                     return <ToucanCard
