@@ -10,3 +10,16 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
+
+@media (max-aspect-ratio:1/1) {
+  .desktopItem {
+    display: none !important
+  }
+}
+
+
+@media (min-aspect-ratio:1/1) {
+  .phoneItem {
+    display: none !important
+  }
+}
