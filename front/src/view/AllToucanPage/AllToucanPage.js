@@ -25,8 +25,8 @@ class AllToucan extends Component {
     }
     render(){
         return (
-            <Segment style={{margin:"3em",padding:"2em"}} textAlign="center">
-            <Card.Group>
+            <Segment style={{textAlign:"center", margin:"3em",padding:"2em"}} >
+            <Card.Group centered >
                 {this.state.toucans.map( toucan => {
                     return <ToucanCard
                     image={`${env.backURL}/toucan/img/${toucan["_id"]}`}
