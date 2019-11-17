@@ -16,14 +16,14 @@ router.route("/toucans")
      * Si before et after sont définis (dates) on ne renvoie qu'entre ces dates
      */
     .get(celebrate({query: validGet}),function(req,res) {
-        let options = {"date":{}};
+        let optionsDate = {};
         if (req.query.before){
-            options["date"]["$lt"]=req.query.before;
+            optionsDate.$lt=req.query.before;
         }
         if(req.query.after){
-            options["date"]["$gt"]=req.query.after;
+            optionsDate.$gt=req.query.after;
         }
-        Toucan.find(options)
+        Toucan.find((req.query.before || req.query.after) ? {"date": optionsDate} : null)
             .sort({date:-1})
             .limit(req.query.limit)
             .exec(function (err, toucans) {
