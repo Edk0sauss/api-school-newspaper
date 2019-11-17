@@ -5,6 +5,9 @@
   "repository": "git@gitlab.viarezo.fr:2018armillond/api-toucan.git",
   "author": "Damien <damien.armillon@gmail.com>",
   "license": "MIT",
+  "scripts": {
+	  "lint": "yarn eslint ."
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
@@ -17,5 +20,8 @@
     "mongoose": "^5.5.3",
     "multer": "^1.4.1",
     "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0"
   }
 }

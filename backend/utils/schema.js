@@ -8,6 +8,10 @@ var newToucan = Joi.object({
 });
 
 var validId = Joi.object({id: Joi.string().hex().length(24).required()});
-var validLimit = Joi.object({limit: Joi.number().integer()});
+var validGet = Joi.object({
+    limit: Joi.number().integer(),
+    before: Joi.date().timestamp(),
+    after: Joi.date().timestamp()
+});
 
-module.exports = { newToucan, validId, validLimit };
+module.exports = { newToucan, validId, validGet };

@@ -3,7 +3,7 @@ var fs = require("fs");
 var path = require("path");
 var { celebrate } = require("celebrate");
 
-var { newToucan, validId, validLimit } = require("../utils/schema");
+var { newToucan, validId, validGet } = require("../utils/schema");
 var env = require("../.env");
 var isLogged = require("../utils/authentification");
 var upload = require("../utils/fileSaver");
@@ -11,9 +11,19 @@ var Toucan = require("../models/modelToucan");
 var router = express.Router();
 
 router.route("/toucans")
-    // Une route qui renvoie un json avec tous les toucans, si limit est défini et vaut n, on renvoie les n derniers toucans
-    .get(celebrate({query: validLimit}),function(req,res) {
-        Toucan.find()
+/**
+     * Une route qui renvoie un json avec tous les toucans, si limit est défini et vaut n, on renvoie les n derniers toucans
+     * Si before et after sont définis (dates) on ne renvoie qu'entre ces dates
+     */
+    .get(celebrate({query: validGet}),function(req,res) {
+        let options = {"date":{}};
+        if (req.query.before){
+            options["date"]["$lt"]=req.query.before;
+        }
+        if(req.query.after){
+            options["date"]["$gt"]=req.query.after;
+        }
+        Toucan.find(options)
             .sort({date:-1})
             .limit(req.query.limit)
             .exec(function (err, toucans) {
