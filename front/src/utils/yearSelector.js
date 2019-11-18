@@ -16,13 +16,16 @@ function SelectYear(props) {
 		});
 	}
 	return(
-		<Dropdown
-		selection
-		placeholder="value"
-		options = {years}
-		defaultValue = {props.beginYear}
-		onChange = {(_,dropdown) => props.updateFrame(dropdown.value)}
-		/>
+		<div style={props.style}>
+			<span style={{marginRight:'1em'}}>Année de parution :</span> 
+			<Dropdown
+			selection
+			placeholder="value"
+			options = {years}
+			defaultValue = {props.beginYear}
+			onChange = {(_,dropdown) => props.updateFrame(dropdown.value)}
+			/>
+		</div>
 	)
 }
 

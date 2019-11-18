@@ -9,12 +9,13 @@ import env from './.env';
 import isLogged from './utils/Oauth';
 
 function App() {
-  return (
+	const logged = isLogged();
+  	return (
     <Router >
-      <PageHeader />
-      <Route exact path='/' component={AllToucanPage} />
-      <Route exact path='/admin' render={()=>isLogged() ? <AdminPage/> : window.location=`${env.backURL}/oauth/login`}/>
+      <PageHeader isLogged={logged} />
+      <Route exact path='/admin' render={()=>logged ? <AdminPage/> : window.location=`${env.backURL}/oauth/login`}/>
       <Route exact path='/login/:token' component={Login} />
+	  <AllToucanPage isAdmin={logged}/>
     </Router>
   );
 }

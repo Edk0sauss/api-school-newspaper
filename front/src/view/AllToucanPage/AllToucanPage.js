@@ -41,26 +41,20 @@ class AllToucan extends Component {
     render(){
         return (
             <Segment style={{textAlign:"center", margin:"3em",padding:"2em"}} >
+
 				<SelectYear
+					style={{marginBottom:"2em"}}
 					beginYear={beginYear}
 					updateFrame = {this.updateFrame.bind(this)}
 				/>
-				{/* <Dropdown
-					selection
-					placeholder="value"
-					options = {years}
-					defaultValue = {beginYear}
-					onChange = {(_,props) => this.setState({
-						before : (new Date(props.value+1,7,31)).getTime(),
-						after : (new  Date(props.value,8,1)).getTime()
-					}, () => this.updateToucan())}
-				/> */}
 				<Card.Group centered >
 					{this.state.toucans.map( toucan => {
 						return <ToucanCard
 						image={`${env.backURL}/toucan/img/${toucan["_id"]}`}
 						link={`${env.backURL}/toucan/pdf/${toucan["_id"]}.pdf`}
 						header={toucan.title}
+						toucanId={toucan._id}
+						isAdmin={this.props.isAdmin}
 						date={(new Date(toucan.date).toLocaleDateString())}
 						key={toucan._id}
 						/>
