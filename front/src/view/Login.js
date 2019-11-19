@@ -5,7 +5,7 @@ class Login extends Component {
     componentDidMount(){
         localStorage.setItem("token",this.props.match.params.token);
         console.log(localStorage.getItem("token"));
-        window.location = '/admin';
+        window.location = '/';
         
         
     }

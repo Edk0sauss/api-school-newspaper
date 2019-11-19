@@ -5,7 +5,6 @@ const env = require("../.env");
 const oauth = env.oauth;
 
 const redirectUri = `${env.backURL}/oauth/callback`;
-console.log(redirectUri);
 
 const getURI = (redirectUri,state) => {
     return `${oauth.authorizationURI}/?redirect_uri=${redirectUri}&client_id=${oauth.clientId}&response_type=code&state=${state}&scope=default`;

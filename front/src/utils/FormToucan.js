@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Form, Message} from 'semantic-ui-react'
-import env from '../../.env'
 class FormToucan extends Component {
     
     constructor(props) {
@@ -60,7 +59,7 @@ class FormToucan extends Component {
        form.append("title",title)
        form.append("toucan",toucan)
        form.append("cover",cover)
-       fetch(`${env.backURL}/toucan/toucans`,{
+       fetch(`${this.props.backURL}/toucan/toucans`,{
             method: 'POST',
             headers:{token: localStorage.getItem("token")},
             body: form

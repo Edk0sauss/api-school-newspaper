@@ -1,21 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
-import AdminPage from './view/AdminPage/AdminPage';
-import AllToucanPage from './view/AllToucanPage/AllToucanPage';
-import PageHeader from './view/PageHeader'
+import {PageFooter, PageHeader, AllToucanPage} from './view/index'
 import Login from './view/Login';
-import env from './.env';
 import isLogged from './utils/Oauth';
+import env from './.env'
 
 function App() {
 	const logged = isLogged();
   	return (
     <Router >
       <PageHeader isLogged={logged} />
-      <Route exact path='/admin' render={()=>logged ? <AdminPage/> : window.location=`${env.backURL}/oauth/login`}/>
       <Route exact path='/login/:token' component={Login} />
-	  <AllToucanPage isAdmin={logged}/>
+	  <Route exact path='/' render={()=><AllToucanPage isAdmin={logged} backURL={env.backURL}/>}/>
+	  <PageFooter/>
     </Router>
   );
 }
