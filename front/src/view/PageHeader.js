@@ -15,16 +15,15 @@ const PageHeader = (props) => {
                 <Image src={logo} alt="Logo" href="/" style={{ width:'40%'}} />
 				{props.isLogged ? <LogoutButton style={{position:"absolute",top:'2em' ,right:"2em"}}/>:
 						<Button icon="male" content="Espace admin" style={{position:"absolute",top:'2em' ,right:"2em"}} onClick={() =>window.location=`${env.backURL}/oauth/login`}/>
-
 				}
             </div>,
             // Si le format est celui d'un téléphone
             <div class="phoneItem" style={{textAlign:"center"}}>
                 <Image src={logo} alt="Logo" href="/" style={{ margin: "2em"}} />
                 <br/>
-                <Link to="/admin"  >
-                    <Button icon="male" content="Espace admin" style={{margin:"1em"}}/>
-                </Link>
+                {props.isLogged ? <LogoutButton style={{margin:"1em"}}/>:
+						<Button icon="male" content="Espace admin" style={{margin:"1em"}} onClick={() =>window.location=`${env.backURL}/oauth/login`}/>
+				}
             </div>
         ]
     )
