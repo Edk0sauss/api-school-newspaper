@@ -6,7 +6,7 @@
   "author": "Damien <damien.armillon@gmail.com>",
   "license": "MIT",
   "scripts": {
-	  "lint": "yarn eslint ."
+    "lint": "yarn eslint ."
   },
   "dependencies": {
     "axios": "^0.18.0",
